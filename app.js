@@ -22,6 +22,9 @@ app.use(body_parser.urlencoded({ extended: true }));
 const posts_routes = require("./routes/posts_routes");
 app.use("/", posts_routes);
 
+const comments_routes = require("./routes/comments_routes");
+app.use("/", comments_routes);
+
 app.listen(port, () => {
   console.log("app is running!");
 });

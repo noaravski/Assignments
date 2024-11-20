@@ -30,3 +30,14 @@ Content-Type: application/json
 {
     "content": "This is an updated content second time!"
 }
+
+###
+
+POST http://localhost:3000/add-comment
+Content-Type: application/json
+
+{
+    "postId": "673e52dbdd56210c35a9a39b",
+    "content": "This is a comment 2",
+    "sender": "Noa"
+}
