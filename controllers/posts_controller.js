@@ -44,4 +44,27 @@ const getPostsBySender = async (req, res) => {
   }
 };
 
-module.exports = { getAllPosts, getPostById, addPost, getPostsBySender };
+const updatePost = async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const post = await Posts.findById(postId);
+    if (post) {
+      post.content = req.body.content;
+      await post.save();
+      res.send(post);
+    } else {
+      res.status(404).send("Post not found");
+    }
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+module.exports = {
+  getAllPosts,
+  getPostById,
+  addPost,
+  getPostsBySender,
+  updatePost,
+};

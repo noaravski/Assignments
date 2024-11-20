@@ -8,13 +8,25 @@ Content-Type: application/json
 
 {
     "title": "Test",
-    "sender": "Idan",
+    "sender": "Noa",
     "content": "Hi Noa!!"
 }
 
 ###
+GET http://localhost:3000/post?sender=Noa
 
-GET http://localhost:3000/post/673e4b2d5673b59f80585f51
+
 
 ###
-GET http://localhost:3000/post?sender=Noa
+GET http://localhost:3000/post/673e52dbdd56210c35a9a39b
+
+
+
+###
+
+PUT http://localhost:3000/post/673e52dbdd56210c35a9a39b
+Content-Type: application/json
+
+{
+    "content": "This is an updated content second time!"
+}
