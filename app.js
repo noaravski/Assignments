@@ -17,7 +17,7 @@ db.once("open", function () {
 
 const body_parser = require("body-parser");
 app.use(body_parser.json());
-app.use(body_parser.urlencoded({ extended: true }))
+app.use(body_parser.urlencoded({ extended: true }));
 
 const posts_routes = require("./routes/posts_routes");
 app.use("/posts", posts_routes);
