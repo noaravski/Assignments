@@ -1,9 +1,9 @@
 ###
-GET http://localhost:3000/posts
+GET http://localhost:3000/post
 
 ###
 
-POST http://localhost:3000/posts
+POST http://localhost:3000/post
 Content-Type: application/json
 
 {
@@ -11,3 +11,7 @@ Content-Type: application/json
     "owner": "Idan",
     "content": "Hi Noa!"
 }
+
+###
+
+GET http://localhost:3000/post/673e4afe5673b59f80585f4e

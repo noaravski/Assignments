@@ -6,4 +6,6 @@ router.get("/", postController.getAllPosts);
 
 router.post("/", postController.addPost);
 
+router.get("/:id", postController.getPostById);
+
 module.exports = router;
