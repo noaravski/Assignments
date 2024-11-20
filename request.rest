@@ -1,17 +1,20 @@
 ###
-GET http://localhost:3000/post
+GET http://localhost:3000/
 
 ###
 
-POST http://localhost:3000/post
+POST http://localhost:3000/
 Content-Type: application/json
 
 {
     "title": "Test",
-    "owner": "Idan",
-    "content": "Hi Noa!"
+    "sender": "Idan",
+    "content": "Hi Noa!!"
 }
 
 ###
 
-GET http://localhost:3000/post/673e4afe5673b59f80585f4e
+GET http://localhost:3000/post/673e4b2d5673b59f80585f51
+
+###
+GET http://localhost:3000/post?sender=Noa

@@ -20,7 +20,7 @@ const getAllPosts = async (req, res) => {
 };
 
 const getPostById = async (req, res) => {
-  const postId = req.params.id;
+  const postId = req.params.post_id;
 
   try {
     const post = await Posts.findById(postId);
@@ -34,4 +34,14 @@ const getPostById = async (req, res) => {
   }
 };
 
-module.exports = { getAllPosts, getPostById, addPost };
+const getPostsBySender = async (req, res) => {
+  const filter = req.query.sender;
+  try {
+    const posts = await Posts.find({ sender: filter });
+    res.send(posts);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+module.exports = { getAllPosts, getPostById, addPost, getPostsBySender };
