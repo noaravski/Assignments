@@ -56,7 +56,4 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/comment/674ce1a355f5182aacdfd350
-
-###
 DELETE http://localhost:3000/comment/674ce321f0f7c0a8a1950e10
