@@ -43,10 +43,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/comment/674cdac283fa0f245d910708
+GET http://localhost:3000/comment/674ce321f0f7c0a8a1950e10
 
 ###
-PUT http://localhost:3000/comment/674cdac283fa0f245d910708
+PUT http://localhost:3000/comment/674ce321f0f7c0a8a1950e10
 Content-Type: application/json
 
 {
@@ -54,3 +54,9 @@ Content-Type: application/json
     "content": "This is an updated comment!",
     "sender": "Noa"
 }
+
+###
+GET http://localhost:3000/comment/674ce1a355f5182aacdfd350
+
+###
+DELETE http://localhost:3000/comment/674ce321f0f7c0a8a1950e10
