@@ -43,4 +43,14 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/comment/674cdf1ac717f4a1e31808e2
+GET http://localhost:3000/comment/674cdac283fa0f245d910708
+
+###
+PUT http://localhost:3000/comment/674cdac283fa0f245d910708
+Content-Type: application/json
+
+{
+    "postId": "673e50c585d6ea9622c6e75f",
+    "content": "This is an updated comment!",
+    "sender": "Noa"
+}
