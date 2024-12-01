@@ -18,13 +18,13 @@ GET http://localhost:3000/post?sender=Noa
 
 
 ###
-GET http://localhost:3000/post/674cda9483fa0f245d9106fe
+GET http://localhost:3000/post/673e50c585d6ea9622c6e75f
 
 
 
 ###
 
-PUT http://localhost:3000/post/674cda9483fa0f245d9106fe
+PUT http://localhost:3000/post/673e50c585d6ea9622c6e75f
 Content-Type: application/json
 
 {
@@ -37,7 +37,10 @@ POST http://localhost:3000/add-comment
 Content-Type: application/json
 
 {
-    "postId": "673e52dbdd56210c35a9a39b",
+    "postId": "673e50c585d6ea9622c6e75f",
     "content": "This is a comment 2",
     "sender": "Noa"
 }
+
+###
+GET http://localhost:3000/comment/674cdf1ac717f4a1e31808e2
