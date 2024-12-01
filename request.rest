@@ -43,7 +43,17 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/comment/674ce1a355f5182aacdfd350
+GET http://localhost:3000/comment/674ce321f0f7c0a8a1950e10
 
 ###
-DELETE http://localhost:3000/comment/674ce1a355f5182aacdfd350
+PUT http://localhost:3000/comment/674ce321f0f7c0a8a1950e10
+Content-Type: application/json
+
+{
+    "postId": "673e50c585d6ea9622c6e75f",
+    "content": "This is an updated comment!",
+    "sender": "Noa"
+}
+
+###
+DELETE http://localhost:3000/comment/674ce321f0f7c0a8a1950e10
