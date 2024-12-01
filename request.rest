@@ -43,4 +43,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/comment/674cdf1ac717f4a1e31808e2
+GET http://localhost:3000/comment/674ce1a355f5182aacdfd350
+
+###
+DELETE http://localhost:3000/comment/674ce1a355f5182aacdfd350

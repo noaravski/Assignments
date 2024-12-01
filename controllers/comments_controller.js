@@ -25,7 +25,22 @@ const readCommentById = async (req, res) => {
   }
 };
 
+const deleteCommentById = async (req, res) => {
+  const commentId = req.params.comment_id;
+
+  try {
+    const comment = await Comment.findByIdAndDelete(commentId);
+    if (comment) {
+      res.send(comment);
+    } else {
+      res.status(404).send("Comment not found");
+    }
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
 module.exports = {
   addComment,
-  readCommentById
+  readCommentById,
+  deleteCommentById
 };
