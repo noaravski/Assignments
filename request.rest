@@ -7,8 +7,8 @@ POST http://localhost:3000/
 Content-Type: application/json
 
 {
-    "title": "Test",
-    "sender": "Noa",
+    "title": "different title",
+    "sender": "idan",
     "content": "Hi Noa!!"
 }
 
@@ -37,8 +37,8 @@ POST http://localhost:3000/add-comment
 Content-Type: application/json
 
 {
-    "postId": "673e50c585d6ea9622c6e75f",
-    "content": "This is a comment 2",
+    "postId": "674df62152e99b6786171701",
+    "content": "kljzdsfljs is a comment 2",
     "sender": "Noa"
 }
 
@@ -57,3 +57,6 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/comment/674ce321f0f7c0a8a1950e10
+
+###
+GET http://localhost:3000/comments/674df62152e99b6786171701
