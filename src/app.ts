@@ -1,11 +1,17 @@
 import express from "express";
 const app = express();
+
 import dotenv from "dotenv";
 dotenv.config();
 const port = process.env.PORT;
-import mongoose from "mongoose";
 
-mongoose.connect(process.env.DB_CONNECT);
+import mongoose, { ConnectOptions } from "mongoose";
+
+mongoose.connect(process.env.DB_CONNECT, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+} as ConnectOptions);
+
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
