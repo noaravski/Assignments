@@ -1,24 +1,32 @@
 import mongoose from "mongoose";
-const Schema = mongoose.Schema;
 
-const commentSchema = new Schema({
+export interface IComments {
+  content: string;
+  sender: string;
+  postId: mongoose.Schema.Types.ObjectId;
+  createdAt: Date;
+}
+
+const commentsSchema = new mongoose.Schema<IComments>({
   postId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Posts',
-    required: true
+    ref: "Posts",
+    required: true,
   },
   content: {
     type: String,
-    required: true
+    required: true,
   },
   sender: {
     type: String,
-    required: true
+    required: true,
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-export default mongoose.model("Comment", commentSchema);
+const commentsModel = mongoose.model<IComments>("Comments", commentsSchema);
+
+export default commentsModel;

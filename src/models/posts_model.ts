@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
-const Schema = mongoose.Schema;
-const postsSchema = new Schema({
+
+export interface IPost {
+  title: string;
+  content: string;
+  sender: string;
+}
+
+const postSchema =  new mongoose.Schema<IPost>({
   title: {
     type: String,
     required: true,
@@ -12,4 +18,6 @@ const postsSchema = new Schema({
   },
 });
 
-export default mongoose.model("Posts", postsSchema);
+const Posts = mongoose.model<IPost>("Posts", postSchema);
+
+export default Posts;

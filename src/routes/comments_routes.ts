@@ -1,15 +1,32 @@
-import express from "express";
+import express, { Request, Response } from "express";
+import {
+  getCommentsByPostId,
+  commentsController,
+} from "../controllers/comments_controller";
+
 const router = express.Router();
-import commentsController from "../controllers/comments_controller";
 
-router.post("/add-comment", commentsController.addComment);
+// Base controller routes
+router.post("/add-comment", (req: Request, res: Response) => {
+  commentsController.createItem(req, res);
+});
 
-router.get("/comment/:comment_id", commentsController.readCommentById);
+router.get("/comment/:id", (req: Request, res: Response) => {
+  commentsController.getItemById(req, res);
+});
 
-router.put("/comment/:comment_id", commentsController.updateComment);
+router.put("/comment/:id", (req: Request, res: Response) => {
+  commentsController.updateItem(req, res);
+});
 
-router.delete("/comment/:comment_id", commentsController.deleteCommentById);
+router.delete("/comment/:id", (req: Request, res: Response) => {
+  commentsController.deleteItem(req, res);
+});
 
-router.get("/comments/:post_id", commentsController.getCommentsByPostId);
+// Custom routes
+
+router.get("/comments/:post_id", (req: Request, res: Response) => {
+  getCommentsByPostId(req, res);
+});
 
 export default router;
