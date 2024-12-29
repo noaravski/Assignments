@@ -8,7 +8,7 @@ Content-Type: application/json
 
 {
     "title": "different title",
-    "sender": "idan",
+    "sender": "Noa",
     "content": "Hi Noa!!"
 }
 
@@ -18,13 +18,13 @@ GET http://localhost:3000/post?sender=Noa
 
 
 ###
-GET http://localhost:3000/post/673e50c585d6ea9622c6e75f
+GET http://localhost:3000/post/677121dd317e30b221f7c5aa
 
 
 
 ###
 
-PUT http://localhost:3000/post/673e50c585d6ea9622c6e75f
+PUT http://localhost:3000/post/677121dd317e30b221f7c5aa
 Content-Type: application/json
 
 {
@@ -37,16 +37,16 @@ POST http://localhost:3000/add-comment
 Content-Type: application/json
 
 {
-    "postId": "674df62152e99b6786171701",
+    "postId": "677121dd317e30b221f7c5aa",
     "content": "kljzdsfljs is a comment 2",
     "sender": "Noa"
 }
 
 ###
-GET http://localhost:3000/comment/674ce321f0f7c0a8a1950e10
+GET http://localhost:3000/comment/677121fd317e30b221f7c5b0
 
 ###
-PUT http://localhost:3000/comment/674ce321f0f7c0a8a1950e10
+PUT http://localhost:3000/comment/677121fd317e30b221f7c5b0
 Content-Type: application/json
 
 {
@@ -56,7 +56,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/comment/674ce321f0f7c0a8a1950e10
+DELETE http://localhost:3000/comment/677121fd317e30b221f7c5b0
 
 ###
-GET http://localhost:3000/comments/674df62152e99b6786171701
+GET http://localhost:3000/comments/677121fd317e30b221f7c5b0

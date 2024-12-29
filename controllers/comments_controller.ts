@@ -1,6 +1,7 @@
-const Comment = require("../models/comments_model");
+import Comment from "../models/comments_model";
+import { Request, Response } from "express";
 
-const addComment = async (req, res) => {
+const addComment = async (req: Request, res: Response) => {
   const commentBody = req.body;
   try {
     const comment = await Comment.create(commentBody);
@@ -10,7 +11,7 @@ const addComment = async (req, res) => {
   }
 };
 
-const readCommentById = async (req, res) => {
+const readCommentById = async (req: Request, res: Response) => {
   const commentId = req.params.comment_id;
 
   try {
@@ -25,7 +26,7 @@ const readCommentById = async (req, res) => {
   }
 };
 
-const updateComment = async (req, res) => {
+const updateComment = async (req: Request, res: Response) => {
   const commentId = req.params.comment_id;
   const commentContent = req.body;
 
@@ -43,7 +44,7 @@ const updateComment = async (req, res) => {
   }
 };
 
-const deleteCommentById = async (req, res) => {
+const deleteCommentById = async (req: Request, res: Response) => {
   const commentId = req.params.comment_id;
 
   try {
@@ -58,7 +59,7 @@ const deleteCommentById = async (req, res) => {
   }
 };
 
-const getCommentsByPostId = async (req, res) => {
+const getCommentsByPostId = async (req: Request, res: Response) => {
   const postId = req.params.post_id;
 
   try {
@@ -73,7 +74,7 @@ const getCommentsByPostId = async (req, res) => {
   }
 }
 
-module.exports = {
+export default {
   addComment,
   readCommentById,
   updateComment,

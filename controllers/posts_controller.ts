@@ -1,6 +1,8 @@
-const Posts = require("../models/posts_model");
+import Posts from "../models/posts_model";
+import { Request, Response } from "express";
 
-const addPost = async (req, res) => {
+
+const addPost = async (req: Request, res: Response) => {
   const postBody = req.body;
   try {
     const post = await Posts.create(postBody);
@@ -10,7 +12,7 @@ const addPost = async (req, res) => {
   }
 };
 
-const getAllPosts = async (req, res) => {
+const getAllPosts = async (req: Request, res: Response) => {
   try {
     const posts = await Posts.find();
     res.send(posts);
@@ -19,7 +21,7 @@ const getAllPosts = async (req, res) => {
   }
 };
 
-const getPostById = async (req, res) => {
+const getPostById = async (req: Request, res: Response) => {
   const postId = req.params.post_id;
 
   try {
@@ -34,7 +36,7 @@ const getPostById = async (req, res) => {
   }
 };
 
-const getPostsBySender = async (req, res) => {
+const getPostsBySender = async (req: Request, res: Response) => {
   const filter = req.query.sender;
   try {
     const posts = await Posts.find({ sender: filter });
@@ -61,7 +63,7 @@ const updatePost = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   getAllPosts,
   getPostById,
   addPost,
