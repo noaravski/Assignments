@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { Model } from "mongoose";
+import userModel from "../models/user_model";
+import postModel from "../models/posts_model";
 
 class BaseController<T> {
   model: Model<T>;
@@ -54,7 +56,9 @@ class BaseController<T> {
 
   async createItem(req: Request, res: Response) {
     const body = req.body;
-    if (body) {
+    const userExists = await userModel.find({ username: body.sender });
+    const postExists = await postModel.find({ sender: body.sender });
+    if (body && userExists.length == 1 && postExists.length == 1) {
       try {
         const item = await this.model.create(body);
         res.status(201).send(item);
@@ -62,7 +66,7 @@ class BaseController<T> {
         res.status(400).send(error);
       }
     } else {
-      res.status(400).send("Item is required");
+      res.status(400).send("User or Post does not exist");
     }
   }
 
@@ -83,15 +87,22 @@ class BaseController<T> {
   async updateItem(req: Request, res: Response) {
     const id = req.params.id;
     const body = req.body;
-    try {
-      const item = await this.model.findByIdAndUpdate(id, body, { new: true });
-      if (item) {
-        res.status(200).send(item);
-      } else {
-        res.status(404).send("Item not found");
+    const userExists = await userModel.find({ username: body.sender });
+    if (body && userExists.length == 1) {
+      try {
+        const item = await this.model.findByIdAndUpdate(id, body, {
+          new: true,
+        });
+        if (item) {
+          res.status(200).send(item);
+        } else {
+          res.status(404).send("Item not found");
+        }
+      } catch (error) {
+        res.status(400).send(error.message);
       }
-    } catch (error) {
-      res.status(400).send(error.message);
+    } else {
+      res.status(400).send("Item is required or User does not exist");
     }
   }
 }

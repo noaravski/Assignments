@@ -8,23 +8,26 @@ Content-Type: application/json
 
 {
     "title": "final title pls",
-    "sender": "idan",
+    "sender": "noa",
     "content": "Hi yani!!"
 }
 
 ###
-GET http://localhost:3000/post?sender=Noa
+GET http://localhost:3000/post?sender=idan
 
 
 
 ###
-GET http://localhost:3000/post/67716b078a63f10575af43af
+GET http://localhost:3000/post/67717e1f824304d431169603
+
+###
+DELETE http://localhost:3000/post/67718cdad4247984da4720c5
 
 
 
 ###
 
-PUT http://localhost:3000/post/67716b078a63f10575af43af
+PUT http://localhost:3000/post/67717e1f824304d431169603
 Content-Type: application/json
 
 {
@@ -37,26 +40,60 @@ POST http://localhost:3000/add-comment
 Content-Type: application/json
 
 {
-    "postId": "67716b078a63f10575af43af",
+    "postId": "67718cdad4247984da4720c5",
     "content": "kljzdsfljs is a comment 2",
-    "sender": "Noa"
+    "sender": "idan"
 }
 
 ###
-GET http://localhost:3000/comment/67716dc5c7ea299e3714deaa
+GET http://localhost:3000/comment/67717ef2f3e757717e8616fa
 
 ###
-PUT http://localhost:3000/comment/67716ccc763101a958748dfa
+PUT http://localhost:3000/comment/67717ef2f3e757717e8616fa
 Content-Type: application/json
 
 {
     "postId": "673e50c585d6ea9622c6e75f",
     "content": "This is an updated comment!",
-    "sender": "Noa"
+    "sender": "noa44"
 }
 
 ###
-DELETE http://localhost:3000/comment/67716ccc763101a958748dfa
+DELETE http://localhost:3000/comment/67717ef2f3e757717e8616fa
 
 ###
-GET http://localhost:3000/comments/67716b078a63f10575af43af
+GET http://localhost:3000/comments/67717e1f824304d431169603
+
+
+
+###get user
+GET http://localhost:3000/user
+
+###
+
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+    "email": "idanefraim13@gmail.com",
+    "username": "idan",
+    "password": "secret123"
+}
+
+###
+GET http://localhost:3000/user/6771817404a76ea1fe6300a6
+
+
+###
+
+PUT http://localhost:3000/user/6771819504a76ea1fe6300aa
+Content-Type: application/json
+
+{
+    "email": "noaravski44@gmail.com",
+    "username": "noa44",
+    "password":"secret123"
+}
+
+###
+DELETE http://localhost:3000/user/6771819504a76ea1fe6300aa

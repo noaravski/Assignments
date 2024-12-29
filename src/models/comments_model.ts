@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 export interface IComments {
   content: string;
-  sender: string;
   postId: mongoose.Schema.Types.ObjectId;
+  sender: string;
   createdAt: Date;
 }
 
@@ -13,11 +13,12 @@ const commentsSchema = new mongoose.Schema<IComments>({
     ref: "Posts",
     required: true,
   },
-  content: {
+  sender: {
     type: String,
+    ref: "Users",
     required: true,
   },
-  sender: {
+  content: {
     type: String,
     required: true,
   },

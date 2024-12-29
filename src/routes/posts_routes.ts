@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import postController from "../controllers/posts_controller";
+import { postController, createPost, deletePost } from "../controllers/posts_controller";
 const router = express.Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -7,7 +7,11 @@ router.get("/", (req: Request, res: Response) => {
 });
 
 router.post("/", (req: Request, res: Response) => {
-  postController.createItem(req, res);
+  createPost(req, res);
+});
+
+router.delete("/post/:id", (req: Request, res: Response) => {
+  deletePost(req, res);
 });
 
 router.get("/post/:id", (req: Request, res: Response) => {

@@ -6,7 +6,7 @@ export interface IPost {
   sender: string;
 }
 
-const postSchema =  new mongoose.Schema<IPost>({
+const postSchema = new mongoose.Schema<IPost>({
   title: {
     type: String,
     required: true,
@@ -14,6 +14,7 @@ const postSchema =  new mongoose.Schema<IPost>({
   content: String,
   sender: {
     type: String,
+    ref: "Users",
     required: true,
   },
 });
