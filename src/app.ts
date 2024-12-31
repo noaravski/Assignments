@@ -28,6 +28,9 @@ app.use("/", posts_routes);
 import comments_routes from "./routes/comments_routes";
 app.use("/", comments_routes);
 
+import users_routes from "./routes/users_routes";
+app.use("/user", users_routes);
+
 app.listen(port, () => {
   console.log("app is running!");
 });
