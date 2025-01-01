@@ -8,8 +8,9 @@ Content-Type: application/json
 
 {
     "title": "final title pls",
-    "sender": "noa",
-    "content": "Hi yani!!"
+    "sender": "noa44",
+    "content": "Hi yani!!"   ,
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzc1YzMwMDA0NDdkMDY2NTliNWIyZGEiLCJyYW5kb20iOiIwLjUzODYxNTYyOTY2NjQxMTUiLCJpYXQiOjE3MzU3NzA5NTIsImV4cCI6MTczNTc3MDk1NX0.p-XGiopul8PuVOTL-ljqXiSLDQplcUvcg_jH399Gc_M"
 }
 
 ###
@@ -75,9 +76,9 @@ POST http://localhost:3000/user
 Content-Type: application/json
 
 {
-    "email": "idanefraim13@gmail.com",
-    "username": "idan",
-    "password": "secret123"
+    "email": "noaravski44@gmail.com",
+    "username": "noa44",
+    "password":"secret123"
 }
 
 ###
@@ -97,3 +98,48 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/user/6771819504a76ea1fe6300aa
+
+
+
+###
+
+POST http://localhost:3000/user/login
+Content-Type: application/json
+
+{
+    "email": "noaravski44@gmail.com",
+    "username": "noa44",
+    "password":"secret123"
+}
+
+
+
+
+###
+
+POST http://localhost:3000/user/logout
+Content-Type: application/json
+
+{
+    "email": "idanefraim13@gmail.com",
+    "username": "idan",
+    "password": "secret123",
+    "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzc1YmRmYzlkYjc1ZDAzMjQxYThmM2MiLCJyYW5kb20iOiIwLjQ5NjA4NDgyMDgzNjYyMTUzIiwiaWF0IjoxNzM1NzY5Njc2LCJleHAiOjE3MzYzNzQ0NzZ9.WHXTR3lnsLlhWic3lASxkhSjrlaQBP7weOcqzYy7NqQ"
+}
+
+
+
+
+###
+
+POST http://localhost:3000/user/refresh
+Content-Type: application/json
+
+{
+    "email": "idanefraim13@gmail.com",
+    "username": "idan",
+    "password": "secret123",
+    "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzc1YmRmYzlkYjc1ZDAzMjQxYThmM2MiLCJyYW5kb20iOiIwLjA1NjM1Njc2NDcxNzE2NjMzIiwiaWF0IjoxNzM1NzY5Njc1LCJleHAiOjE3MzYzNzQ0NzV9.Y9veo6kOw0hVgys958lW2PBN8ZUL054HLiF9PsbzWKI"
+
+}
+

@@ -1,7 +1,21 @@
 import express, { Request, Response } from "express";
-import { usersController, createUser, updateUser, deleteUser } from "../controllers/user_controller";
+import {
+  usersController,
+  createUser,
+  updateUser,
+  deleteUser,
+  login,
+  logout,
+  refresh,
+} from "../controllers/user_controller";
 
 const router = express.Router();
+
+router.post("/login", login);
+
+router.post("/logout", logout);
+
+router.post("/refresh", refresh);
 
 router.get("/", (req: Request, res: Response) => {
   usersController.getAllItems(req, res);
