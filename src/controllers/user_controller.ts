@@ -192,7 +192,7 @@ const refresh = async (req: Request, res: Response) => {
         if (!newTokens) {
           user.refreshToken = [];
           await user.save();
-          res.status(500).send("Inrtnal server error");
+          res.status(500).send("Internal server error");
           return;
         }
         //delete the old refresh token

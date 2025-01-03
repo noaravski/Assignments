@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { postController, createPost, deletePost } from "../controllers/posts_controller";
+import { postController, deletePost } from "../controllers/posts_controller";
 import { authMiddleware } from "../controllers/user_controller";
 const router = express.Router();
 
@@ -7,8 +7,8 @@ router.get("/", (req: Request, res: Response) => {
   postController.getAllItems(req, res);
 });
 
-router.post("/", authMiddleware, (req: Request, res: Response) => {
-  createPost(req, res);
+router.post("/", authMiddleware, async (req: Request, res: Response) => {
+  postController.createItem(req, res);
 });
 
 router.delete("/post/:id", authMiddleware, (req: Request, res: Response) => {

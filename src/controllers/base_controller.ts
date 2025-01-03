@@ -56,9 +56,9 @@ class BaseController<T> {
 
   async createItem(req: Request, res: Response) {
     const body = req.body;
-    const userExists = await userModel.find({ username: body.sender });
-    const postExists = await postModel.find({ sender: body.sender });
-    if (body && userExists.length == 1 && postExists.length == 1) {
+    // const userExists = await userModel.find({ username: body.sender });
+    // const postExists = await postModel.find({ sender: body.sender });
+    if (body) {
       try {
         const item = await this.model.create(body);
         res.status(201).send(item);
