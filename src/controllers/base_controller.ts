@@ -9,12 +9,8 @@ class BaseController<T> {
   }
 
   async getAllItems(req: Request, res: Response) {
-    try {
-      const items = await this.model.find();
-      res.status(200).send(items);
-    } catch (error) {
-      res.status(400).send(error);
-    }
+    const items = await this.model.find();
+    res.status(200).send(items);
   }
 
   async getItemById(req: Request, res: Response) {
@@ -84,18 +80,10 @@ class BaseController<T> {
     const body = req.body;
     const userExists = await userModel.find({ username: body.sender });
     if (body && userExists.length == 1) {
-      try {
-        const item = await this.model.findByIdAndUpdate(id, body, {
-          new: true,
-        });
-        if (item) {
-          res.status(200).send(item);
-        } else {
-          res.status(404).send("Item not found");
-        }
-      } catch (error) {
-        res.status(400).send(error.message);
-      }
+      const item = await this.model.findByIdAndUpdate(id, body, {
+        new: true,
+      });
+      res.status(200).send(item);
     } else {
       res.status(400).send("Item is required or User does not exist");
     }
