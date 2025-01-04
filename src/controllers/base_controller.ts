@@ -9,12 +9,8 @@ class BaseController<T> {
   }
 
   async getAllItems(req: Request, res: Response) {
-    try {
-      const items = await this.model.find();
-      res.status(200).send(items);
-    } catch (error) {
-      res.status(400).send(error);
-    }
+    const items = await this.model.find();
+    res.status(200).send(items);
   }
 
   async getItemById(req: Request, res: Response) {
