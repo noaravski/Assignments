@@ -8,9 +8,9 @@ Content-Type: application/json
 
 {
     "title": "final title pls",
-    "sender": "noa44",
-    "content": "Hi yani!!"   ,
-  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzc1YzMwMDA0NDdkMDY2NTliNWIyZGEiLCJyYW5kb20iOiIwLjUzODYxNTYyOTY2NjQxMTUiLCJpYXQiOjE3MzU3NzA5NTIsImV4cCI6MTczNTc3MDk1NX0.p-XGiopul8PuVOTL-ljqXiSLDQplcUvcg_jH399Gc_M"
+    "sender": "noa",
+    "content": "Hi yani!!", 
+    "Authorization": "jwt fnaskjlfhjashfjkasn"
 }
 
 ###

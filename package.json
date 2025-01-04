@@ -4,7 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --detectOpenHandles --forceExit --runInBand --coverage",
+    "testUser": "tsc && jest --detectOpenHandles --forceExit user.test.ts",
+    "testPost": "tsc && jest --detectOpenHandles --forceExit post.test.ts",
+    "testComment": "tsc && jest --detectOpenHandles --forceExit comment.test.ts",
     "dev": "nodemon ./src/app.ts",
     "lint": "eslint . --ext .ts",
     "start": "tsc && node dist/app.js"
@@ -25,7 +28,9 @@
     "@types/jest": "^29.5.14",
     "eslint": "^9.17.0",
     "globals": "^15.14.0",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.9",
+    "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2",
