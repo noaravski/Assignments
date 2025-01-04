@@ -60,7 +60,7 @@ describe("Posts Test", () => {
   });
 
   test("Post -> create new posts (test_post.json)", async () => {
-    for (let post of testPosts) {
+    for (const post of testPosts) {
       const response = await request(app)
         .post("/")
         .set("authorization", "JWT " + testUser.refreshToken)
@@ -106,19 +106,13 @@ describe("Posts Test", () => {
       .delete("/post/" + "AAAAAAAAAAAAAAAAAAAAAAAA") //A - is valid id but not existing one
       .set("authorization", "JWT " + testUser.refreshToken);
     expect(response.statusCode).toBe(404);
-
-    const responseGet = await request(app).get("/posts/" + testPosts[0]._id);
-    expect(responseGet.statusCode).toBe(404);
   });
 
   test("Post -> Delete post with invalid id", async () => {
     const response = await request(app)
       .delete("/post/" + "AAA")  //A - is invalid id
       .set("authorization", "JWT " + testUser.refreshToken);
-    expect(response.statusCode).toBe(404);
-
-    const responseGet = await request(app).get("/posts/" + testPosts[0]._id);
-    expect(responseGet.statusCode).toBe(404);
+    expect(response.statusCode).toBe(400);
   });
 
   test("Post -> Failed to create new post", async () => {

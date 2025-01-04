@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { Model } from "mongoose";
 import userModel from "../models/user_model";
-import postModel from "../models/posts_model";
 
 class BaseController<T> {
   model: Model<T>;
@@ -31,8 +30,6 @@ class BaseController<T> {
       } catch (error) {
         res.status(400).send(error);
       }
-    } else {
-      res.status(400).send("Id is required");
     }
   }
 
