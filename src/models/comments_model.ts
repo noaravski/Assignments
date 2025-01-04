@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 export interface IComments {
   content: string;
-  postId: mongoose.Schema.Types.ObjectId;
+  postId: string;
   sender: string;
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 const commentsSchema = new mongoose.Schema<IComments>({
   postId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "Posts",
     required: true,
   },
