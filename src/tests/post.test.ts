@@ -81,13 +81,14 @@ describe("Posts Test", () => {
   test("Post -> get post by id", async () => {
     const response = await request(app).get("/post/" + testPosts[0]._id);
     expect(response.statusCode).toBe(200);
-    expect(response.body._id).toBe(testPosts[0]._id); // with _?
+    expect(response.body._id).toBe(testPosts[0]._id);
   });
 
   test("Post -> get post by sender", async () => {
     const response = await request(app).get("/post").query({ sender: testUser.username });
     expect(response.statusCode).toBe(200);
     expect(response.body.length).toBe(2);
+    expect(response.body[0].sender).toBe(testUser.username);
   });
 
   test("Post -> Delete post", async () => {
@@ -102,7 +103,7 @@ describe("Posts Test", () => {
 
   test("Post -> Delete non existing post", async () => {
     const response = await request(app)
-      .delete("/post/" + "AAAAAAAAAAAAAAAAAAAAAAAA")
+      .delete("/post/" + "AAAAAAAAAAAAAAAAAAAAAAAA") //A - is valid id but not existing one
       .set("authorization", "JWT " + testUser.refreshToken);
     expect(response.statusCode).toBe(404);
 
@@ -112,7 +113,7 @@ describe("Posts Test", () => {
 
   test("Post -> Delete post with invalid id", async () => {
     const response = await request(app)
-      .delete("/post/" + "AAA")
+      .delete("/post/" + "AAA")  //A - is invalid id
       .set("authorization", "JWT " + testUser.refreshToken);
     expect(response.statusCode).toBe(404);
 
