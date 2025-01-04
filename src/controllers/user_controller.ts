@@ -35,11 +35,12 @@ type tTokens = {
 };
 
 const generateToken = (userId: string): tTokens | null => {
+  const random = Math.random().toString();
+
   if (!process.env.TOKEN_SECRET) {
     return null;
   }
-  // generate token
-  const random = Math.random().toString();
+
   const accessToken = jwt.sign(
     {
       _id: userId,
@@ -71,38 +72,31 @@ const login = async (req: Request, res: Response) => {
     res.status(400).send("Email, username and password are required");
     return;
   }
-  try {
-    const user = await userModel.findOne({ email: email });
-    if (!user) {
-      res.status(400).send("Email, username and password are required");
-      return;
-    }
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      res.status(400).send("Email, username and password are required");
-      return;
-    }
-    const userId: string = user._id.toString();
-    const tokens = generateToken(userId);
-    if (!tokens) {
-      res.status(500).send("Server Error");
-      return;
-    }
-    if (user.refreshToken == null) {
-      user.refreshToken = [];
-    }
-    user.refreshToken.push(tokens.refreshToken);
-    await user.save();
-    res.status(200).send({
-      email: user.email,
-      username: user.username,
-      accessToken: tokens.accessToken,
-      refreshToken: tokens.refreshToken,
-      _id: user._id,
-    });
-  } catch (err) {
-    res.status(400).send(err);
+  const user = await userModel.findOne({ email: email, username: username });
+  if (!user) {
+    res.status(400).send("Email, username and password are required");
+    return;
   }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    res.status(400).send("Password is incorrect");
+    return;
+  }
+  const userId: string = user._id.toString();
+  const tokens = generateToken(userId);
+  if (!tokens) {
+    res.status(500).send("Server Error");
+    return;
+  }
+  user.refreshToken.push(tokens.refreshToken);
+  await user.save();
+  res.status(200).send({
+    email: user.email,
+    username: user.username,
+    accessToken: tokens.accessToken,
+    refreshToken: tokens.refreshToken,
+    _id: user._id,
+  });
 };
 
 type TokenPayload = {
@@ -115,10 +109,8 @@ const logout = async (req: Request, res: Response) => {
     res.status(400).send("refresh token is required");
     return;
   }
-
-  // first validate the refresh token
   if (!process.env.TOKEN_SECRET) {
-    res.status(400).send("missing auth configuration");
+    res.status(500).send("missing auth configuration");
     return;
   }
   jwt.verify(
@@ -130,25 +122,15 @@ const logout = async (req: Request, res: Response) => {
         return;
       }
       const payload = data as TokenPayload;
-      try {
-        const user = await userModel.findOne({ _id: payload._id });
-        if (!user) {
-          res.status(404).send("invalid token");
-          return;
-        }
-        if (!user.refreshToken || !user.refreshToken.includes(refreshToken)) {
-          res.status(400).send("invalid token");
-          user.refreshToken = [];
-          await user.save();
-          return;
-        }
-        const tokens = user.refreshToken.filter((t) => t !== refreshToken);
-        user.refreshToken = tokens;
-        await user.save();
-        res.status(200).send("logged out");
-      } catch (err) {
-        res.status(400).send("invalid token");
+      const user = await userModel.findOne({ _id: payload._id });
+      if (!user) {
+        res.status(404).send("invalid token");
+        return;
       }
+      const tokens = user.refreshToken.filter((t) => t !== refreshToken);
+      user.refreshToken = tokens;
+      await user.save();
+      res.status(200).send("logged out");
     }
   );
 };
@@ -160,56 +142,42 @@ const refresh = async (req: Request, res: Response) => {
     res.status(400).send("refresh token is required");
     return;
   }
-  if (!process.env.TOKEN_SECRET) {
-    res.status(400).send("missing auth configuration");
-    return;
-  }
   jwt.verify(
     refreshToken,
     process.env.TOKEN_SECRET,
     async (err: any, data: any) => {
       if (err) {
-        res.status(403).send("invalid token");
+        res.status(500).send("Internal server error");
         return;
       }
       //find the user
       const payload = data as TokenPayload;
-      try {
-        const user = await userModel.findOne({ _id: payload._id });
-        if (!user) {
-          res.status(404).send("invalid token");
-          return;
-        }
-        //check that the token exists in the user
-        if (!user.refreshToken || !user.refreshToken.includes(refreshToken)) {
-          user.refreshToken = [];
-          await user.save();
-          res.status(400).send("invalid token");
-          return;
-        }
-        //generate a new access token
-        const newTokens = generateToken(user._id.toString());
-        if (!newTokens) {
-          user.refreshToken = [];
-          await user.save();
-          res.status(500).send("Internal server error");
-          return;
-        }
-        //delete the old refresh token
-        user.refreshToken = user.refreshToken.filter((t) => t !== refreshToken);
-
-        //save the new refresh token in the user
-        user.refreshToken.push(newTokens.refreshToken);
-        await user.save();
-
-        //return the new access token and the new refresh token
-        res.status(200).send({
-          accessToken: newTokens.accessToken,
-          refreshToken: newTokens.refreshToken,
-        });
-      } catch (err) {
-        res.status(400).send("invalid token");
+      const user = await userModel.findOne({ _id: payload._id });
+      if (!user) {
+        res.status(404).send("invalid token");
+        return;
       }
+      //check that the token exists in the user
+      if (!user.refreshToken || !user.refreshToken.includes(refreshToken)) {
+        user.refreshToken = [];
+        await user.save();
+        res.status(400).send("invalid token");
+        return;
+      }
+      //generate a new access token
+      const newTokens = generateToken(user._id.toString());
+      //delete the old refresh token
+      user.refreshToken = user.refreshToken.filter((t) => t !== refreshToken);
+
+      //save the new refresh token in the user
+      user.refreshToken.push(newTokens.refreshToken);
+      await user.save();
+
+      //return the new access token and the new refresh token
+      res.status(200).send({
+        accessToken: newTokens.accessToken,
+        refreshToken: newTokens.refreshToken,
+      });
     }
   );
 };
@@ -224,10 +192,6 @@ export const authMiddleware = (
 
   if (!token) {
     res.status(401).send("Access Denied");
-    return;
-  }
-  if (!process.env.TOKEN_SECRET) {
-    res.status(500).send("Server Error");
     return;
   }
 
@@ -260,9 +224,7 @@ const updateUser = async (req: Request, res: Response) => {
       res.status(400).send(error.message);
     }
   } else {
-    res
-      .status(400)
-      .send("Username or email is taken or user to update doesnt exists!");
+    res.status(400).send("Username or email is taken or user to update doesnt exists!");
   }
 };
 

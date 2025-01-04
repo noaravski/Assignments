@@ -20,7 +20,7 @@ router.post("/refresh", refresh);
 router.get("/", (req: Request, res: Response) => {
   usersController.getAllItems(req, res);
 });
-
+//register
 router.post("/", (req: Request, res: Response) => {
   createUser(req, res);
 });

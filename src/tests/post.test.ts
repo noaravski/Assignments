@@ -1,32 +1,22 @@
 import request from "supertest";
 import appInit from "../server";
 import mongoose from "mongoose";
-import postsModel from "../models/posts_model";
+import postsModel, { IPost } from "../models/posts_model";
 import userModel from "../models/user_model";
 import testPostsData from "./test_posts.json";
 import { Express } from "express";
+import { IUser } from "../models/user_model";
 
 let app: Express;
 
-type User = {
-  _id?: string;
-  email: string;
-  username: string;
-  password: string;
-  refreshToken?: string;
-};
-
-const testUser: User = {
+const testUser: IUser = {
   email: "noaravski@gmail.com",
   username: "noa",
   password: "Noaravski123",
 };
 
-type Post = {
+type Post = IPost & {
   _id?: string;
-  title: string;
-  content: string;
-  sender: string;
 };
 
 const testPosts: Post[] = testPostsData;
@@ -52,7 +42,7 @@ afterAll(() => {
   mongoose.connection.close();
 });
 
-describe("Posts Test", () => {
+describe("Posts Tests", () => {
   test("Post -> get all post when empty", async () => {
     const response = await request(app).get("/");
     expect(response.statusCode).toBe(200);
@@ -68,6 +58,7 @@ describe("Posts Test", () => {
       expect(response.statusCode).toBe(201);
       expect(response.body.title).toBe(post.title);
       expect(response.body.content).toBe(post.content);
+      expect(response.body.sender).toBe(post.sender);
       post._id = response.body._id;
     }
   });
@@ -85,9 +76,12 @@ describe("Posts Test", () => {
   });
 
   test("Post -> get post by sender", async () => {
-    const response = await request(app).get("/post").query({ sender: testUser.username });
+    const response = await request(app)
+      .get("/post")
+      .query({ sender: testUser.username });
     expect(response.statusCode).toBe(200);
     expect(response.body.length).toBe(2);
+    expect(response.body[0].sender).toBe(testUser.username);
     expect(response.body[0].sender).toBe(testUser.username);
   });
 
@@ -120,6 +114,25 @@ describe("Posts Test", () => {
       .post("/")
       .set("authorization", "JWT " + testUser.refreshToken)
       .send({
+        content: "Test Content 1",
+      });
+    expect(response.statusCode).toBe(400);
+  });
+  test("Post -> update post", async () => {
+    const response = await request(app)
+      .put("/post/" + testPosts[1]._id)
+      .set("authorization", "JWT " + testUser.refreshToken)
+      .send({
+        content: "Test Content 1",
+      });
+    expect(response.statusCode).toBe(400);
+  });
+  test("Post -> update non existing post existing user", async () => {
+    const response = await request(app)
+      .put("/post/" + testPosts[1]._id)
+      .set("authorization", "JWT " + testUser.refreshToken)
+      .send({
+        id: "AAAAAAAAAAAAAAAAAAAAAAAA",
         content: "Test Content 1",
       });
     expect(response.statusCode).toBe(400);

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export interface IUser {
   email: string;
-  username?: string;
+  username: string;
   password: string;
   _id?: string;
   refreshToken?: string[];
