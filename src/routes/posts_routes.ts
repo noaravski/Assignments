@@ -33,7 +33,13 @@ const router = express.Router();
  *         sender:
  *           type: string
  *           description: The sender of the post
+ *       example:
+ *         _id: 245234t234234r234r23f4
+ *         title: My First Post
+ *         content: This is the content of my first post.
+ *         sender: noa
  */
+
 
 /**
  * @swagger
@@ -50,6 +56,8 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Post'
+ *       500:
+ *         description: Server error
  */
 router.get("/", (req: Request, res: Response) => {
   postController.getAllItems(req, res);
@@ -70,10 +78,16 @@ router.get("/", (req: Request, res: Response) => {
  *           schema:
  *             $ref: '#/components/schemas/Post'
  *     responses:
- *       200:
- *         description: The post was successfully created
+ *       201:
+ *         description: Post created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Post'
  *       400:
- *         description: Bad request
+ *         description: Invalid input
+ *       500:
+ *         description: Server error
  */
 router.post("/", authMiddleware, async (req: Request, res: Response) => {
   postController.createItem(req, res);
@@ -99,6 +113,8 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
  *         description: The post was successfully deleted
  *       404:
  *         description: The post was not found
+ *       500:
+ *         description: Server error
  */
 router.delete("/post/:id", authMiddleware, (req: Request, res: Response) => {
   deletePost(req, res);
@@ -108,7 +124,7 @@ router.delete("/post/:id", authMiddleware, (req: Request, res: Response) => {
  * @swagger
  * /post/{id}:
  *   get:
- *     summary: Gets a post by id
+ *     summary: Gets a post by ID
  *     tags: [Posts]
  *     parameters:
  *       - in: path
@@ -116,16 +132,20 @@ router.delete("/post/:id", authMiddleware, (req: Request, res: Response) => {
  *         schema:
  *           type: string
  *         required: true
- *         description: The post id
+ *         description: The post ID
  *     responses:
  *       200:
- *         description: The post description by id
+ *         description: The post description by ID
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Post'
+ *       400:
+ *         description: The id not exists
  *       404:
  *         description: The post was not found
+ *       500:
+ *         description: Server error
  */
 router.get("/post/:id", (req: Request, res: Response) => {
   postController.getItemById(req, res);
@@ -146,7 +166,7 @@ router.get("/post/:id", (req: Request, res: Response) => {
  *         description: The sender of the posts
  *     responses:
  *       200:
- *         description: The list of posts by the sender
+ *         description:  A single post
  *         content:
  *           application/json:
  *             schema:
@@ -155,6 +175,8 @@ router.get("/post/:id", (req: Request, res: Response) => {
  *                 $ref: '#/components/schemas/Post'
  *       404:
  *         description: The sender was not found
+ *       500:
+ *         description: Server error
  */
 router.get("/post", (req: Request, res: Response) => {
   postController.getItemBySender(req, res);
