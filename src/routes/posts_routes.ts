@@ -46,6 +46,7 @@ const router = express.Router();
  * /:
  *   get:
  *     summary: Returns the list of all the posts
+ *     description: Retrieve a list of all posts
  *     tags: [Posts]
  *     responses:
  *       200:
@@ -68,6 +69,7 @@ router.get("/", (req: Request, res: Response) => {
  * /:
  *   post:
  *     summary: Creates a new post
+ *     description: Create a new post
  *     tags: [Posts]
  *     security:
  *       - bearerAuth: []
@@ -85,7 +87,7 @@ router.get("/", (req: Request, res: Response) => {
  *             schema:
  *               $ref: '#/components/schemas/Post'
  *       400:
- *         description: Invalid input
+ *         description: Bad request
  *       500:
  *         description: Server error
  */
@@ -98,6 +100,7 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
  * /post/{id}:
  *   delete:
  *     summary: Deletes a post by id
+ *     description: Delete a single post by its ID
  *     tags: [Posts]
  *     security:
  *       - bearerAuth: []
@@ -111,10 +114,10 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
  *     responses:
  *       200:
  *         description: The post was successfully deleted
+ *       400:
+ *         description: error
  *       404:
  *         description: The post was not found
- *       500:
- *         description: Server error
  */
 router.delete("/post/:id", authMiddleware, (req: Request, res: Response) => {
   deletePost(req, res);
@@ -125,6 +128,7 @@ router.delete("/post/:id", authMiddleware, (req: Request, res: Response) => {
  * /post/{id}:
  *   get:
  *     summary: Gets a post by ID
+ *     description: Get a single post by its ID
  *     tags: [Posts]
  *     parameters:
  *       - in: path
@@ -155,7 +159,8 @@ router.get("/post/:id", (req: Request, res: Response) => {
  * @swagger
  * /post:
  *   get:
- *     summary: Gets posts by sender
+ *     summary: Get posts by sender
+ *     description: Get post by sender
  *     tags: [Posts]
  *     parameters:
  *       - in: query
@@ -173,6 +178,8 @@ router.get("/post/:id", (req: Request, res: Response) => {
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Post'
+ *       400:
+ *         description: The sender was not found
  *       404:
  *         description: The sender was not found
  *       500:
@@ -206,7 +213,7 @@ router.get("/post", (req: Request, res: Response) => {
  *     responses:
  *       200:
  *         description: The post was successfully updated
- *       404:
+ *       400:
  *         description: The post was not found
  */
 router.put("/post/:id", authMiddleware, (req: Request, res: Response) => {
